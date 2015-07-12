@@ -1,0 +1,28 @@
+{
+  "chmod": "0755",
+  "directories": [
+    "src",
+    "res"
+  ],
+  "files": [
+    "vendor/autoload.php"
+  ],
+  "finder": [
+    {
+      "name": "*.php",
+      "in": "vendor/composer"
+    },
+    {
+      "name": "*.php",
+      "exclude": [
+        "Tester",
+        "Tests"
+      ],
+      "in": "vendor/symfony/console"
+    }
+  ],
+  "git-version": "package_version",
+  "main": "bin/console",
+  "output": "tzdate.phar",
+  "stub": true
+}

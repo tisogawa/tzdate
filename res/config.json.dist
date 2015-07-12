@@ -1,0 +1,24 @@
+{
+  "default_timezones": [
+    "UTC",
+    "London",
+    "Paris",
+    "New York",
+    "San Francisco",
+    "Honolulu",
+    "Beijing",
+    "Tokyo"
+  ],
+  "cities": {
+    "San Francisco": "America/Los_Angeles",
+    "Beijing": "Asia/Shanghai",
+    "Calcutta": "Asia/Kolkata"
+  },
+  "aliases": {
+    "NY": "New York",
+    "LA": "Los Angeles",
+    "SF": "San Francisco",
+    "HK": "Hong Kong"
+  },
+  "list_format": "<info>%1$-15s</info> %2$-7s %3$-9s %4$s"
+}

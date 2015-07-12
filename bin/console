@@ -1,0 +1,15 @@
+#!/usr/bin/env php
+<?php
+
+require __DIR__ . '/../vendor/autoload.php';
+
+use TzDate\Console\Application;
+
+set_error_handler(function ($severity, $message, $file, $line) {
+    if (error_reporting() !== 0) {
+        throw new ErrorException($message, 0, $severity, $file, $line);
+    }
+});
+
+$application = new Application('tzdate', '@package_version@');
+$application->run();

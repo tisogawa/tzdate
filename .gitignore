@@ -1,0 +1,12 @@
+*~
+*.swp
+.DS_Store
+._.DS_Store
+.idea
+!.gitkeep
+*.phar
+composer.lock
+phpunit.xml
+vendor
+res/config.json
+tzdate
