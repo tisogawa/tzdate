@@ -5,7 +5,7 @@ Small command-line world clock to print certain date/time in multiple timezones,
 ## Require
 
 - PHP >= 5.3.3
-- PHP's [phar.readonly](http://php.net/phar.configuration#ini.phar.readonly) setting need to be "Off"
+- PHP's [phar.readonly](http://php.net/phar.configuration#ini.phar.readonly) setting needs to be "Off" on install (should be resumed afterwards)
 
 ## Install
 
@@ -29,6 +29,8 @@ Beijing         +08:00  CST       2015-07-01 08:00:00
 Tokyo           +09:00  JST       2015-07-01 09:00:00
 ```
 
+See Customize section to modify the default timezones.
+
 Type as the following to print the date/time of 9pm, July 15 (current year) in San Francisco.
 
 ```
@@ -48,7 +50,7 @@ The first argument is [string expression of date/time](http://php.net/datetime.f
 The second argument is the timezone name for the date/time
 (If omitted, the timezone defined as [date.timezone](http://php.net/datetime.configuration#ini.date.timezone) of PHP will be used).
 
-You can use the following format to specify the timezone (all case-insensitive).
+You can use the following format to specify the timezone. All case-insensitive, and underscores and spaces can be omitted.
 
 * [IANA Timezone Identifier](http://php.net/timezones) (e.g. `America/Los_Angeles`)
 * City name part of the identifier (e.g. `'Los Angeles'`, `losangeles`)
@@ -56,6 +58,8 @@ You can use the following format to specify the timezone (all case-insensitive).
 
 You can even use the name of some cities that are not in IANA registry.
 For example, you can use `'San Francisco'`, `sanfrancisco` or `sf` for it.
+
+See Customize section for cities that are not in IANA registry, or for alias/ abbreviation for cities.
 
 ## Command option
 
@@ -108,7 +112,7 @@ For example, to print date/time in 11 timezones of Russia by default, edit the e
 You can define cities that are not in IANA registry.
 
 For example, Saint Petersburg is not in IANA registry but if you want to specify timezone by the name,
-you can define it as the following.
+add the following line to the entry.
 
 ```json
 {
@@ -131,7 +135,7 @@ St Petersburg   +03:00  MSK       2015-07-01 03:00:00
 You can define alias/ abbreviation for cities.
 
 For example, if you do not want to type `stpetersburg` for Saint Petersburg,
-edit the entry as follows (For this example, `"St Petersburg"` must be in `cities` entry as the example above).
+add the following lines to the entry (For this example, `"St Petersburg"` must be in `cities` entry as the example above).
 
 ```json
 {
@@ -142,7 +146,7 @@ edit the entry as follows (For this example, `"St Petersburg"` must be in `citie
 }
 ```
 
-Then you can use `spb` or `stpete` instead of `stpetersburg`.
+And now you can use `spb` or `stpete` instead of `stpetersburg`.
 
 ```
 $ tzdate -z spb
