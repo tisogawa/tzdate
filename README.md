@@ -76,20 +76,79 @@ List always include the timezone defined as [date.timezone](http://php.net/datet
 
 ## Customize
 
-Copy `res/config.json.dist` to `res/config.json` and modify the entries.
-Entries in `res/config.json` will override the entry in `.dist`.
+Copy [`res/config.json.dist`](https://github.com/tisogawa/tzdate/blob/master/res/config.json.dist) to `res/config.json`
+and modify the entries. Entries in `res/config.json` will override the entry in `.dist`.
 
 ### default_timezones
 
 Default timezones for the list (used when `-z` option does not present).
 
+For example, to print date/time in 11 timezones of Russia by default, edit the entry as follows.
+
+```json
+{
+  "default_timezones": [
+    "Kaliningrad",
+    "Moscow",
+    "Samara",
+    "Yekaterinburg",
+    "Omsk",
+    "Krasnoyarsk",
+    "Irkutsk",
+    "Yakutsk",
+    "Vladivostok",
+    "Srednekolymsk",
+    "Kamchatka"
+  ]
+}
+```
+
 ### cities
 
 You can define cities that are not in IANA registry.
 
+For example, Saint Petersburg is not in IANA registry but if you want to specify timezone by the name,
+you can define it as the following.
+
+```json
+{
+  "cities": {
+    "St Petersburg": "Europe/Moscow"
+  }
+}
+```
+
+Then you can give `'St Petersburg'` or `stpetersburg` to the command.
+
+```
+$ tzdate -z stpetersburg
+UTC             +00:00  UTC       2015-07-01 00:00:00
+St Petersburg   +03:00  MSK       2015-07-01 03:00:00
+```
+
 ### aliases
 
 You can define alias/ abbreviation for cities.
+
+For example, if you do not want to type `stpetersburg` for Saint Petersburg,
+edit the entry as follows (For this example, `"St Petersburg"` must be in `cities` entry as the example above).
+
+```json
+{
+  "aliases": {
+    "SPB": "St Petersburg",
+    "St Pete": "St Petersburg"
+  }
+}
+```
+
+Then you can use `spb` or `stpete` instead of `stpetersburg`.
+
+```
+$ tzdate -z spb
+UTC             +00:00  UTC       2015-07-01 00:00:00
+St Petersburg   +03:00  MSK       2015-07-01 03:00:00
+```
 
 ### list_format
 
