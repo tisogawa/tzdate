@@ -79,7 +79,7 @@ Hong Kong       +08:00  HKT       2015-07-01 08:00:00
 
 List always include the timezone defined as [date.timezone](http://php.net/datetime.configuration#ini.date.timezone) of PHP.
 
-### -f
+### `-f`
 
 With `-f` option, you can customize the date/time format in the list.
 Any formats accepted by PHP's [`date()`](http://php.net/date) function can be used.
