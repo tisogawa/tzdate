@@ -50,7 +50,7 @@ The first argument is [string expression of date/time](http://php.net/datetime.f
 The second argument is the timezone name for the date/time
 (If omitted, the timezone defined as [date.timezone](http://php.net/datetime.configuration#ini.date.timezone) of PHP will be used).
 
-You can use the following format to specify the timezone. All case-insensitive, and underscores and spaces can be omitted.
+You can use the following forms to specify the timezone. All case-insensitive, and underscores and spaces can be omitted.
 
 * [IANA Timezone Identifier](http://php.net/timezones) (e.g. `America/Los_Angeles`)
 * City name part of the identifier (e.g. `'Los Angeles'`, `losangeles`)
@@ -66,6 +66,7 @@ See Customize section for cities that are not in IANA registry, or for alias/ ab
 ### `-z`
 
 You can use `-z` option to customize the timezones of the list.
+
 For example, to print current date/time in Hong Kong, Kolkata and Anchorage, type as the following.
 
 ```
@@ -77,6 +78,25 @@ Hong Kong       +08:00  HKT       2015-07-01 08:00:00
 ```
 
 List always include the timezone defined as [date.timezone](http://php.net/datetime.configuration#ini.date.timezone) of PHP.
+
+### -f
+
+With `-f` option, you can customize the date/time format in the list.
+Any formats accepted by PHP's [`date()`](http://php.net/date) function can be used.
+
+For example, type the following to print date/time in RFC 2822 form (which can be specified by `r`).
+
+```
+$ tzdate -f r
+Honolulu        -10:00  HST       Tue, 30 Jun 2015 14:00:00 -1000
+San Francisco   -07:00  PDT       Tue, 30 Jun 2015 17:00:00 -0700
+New York        -04:00  EDT       Tue, 30 Jun 2015 20:00:00 -0400
+UTC             +00:00  UTC       Wed, 01 Jul 2015 00:00:00 +0000
+London          +01:00  BST       Wed, 01 Jul 2015 01:00:00 +0100
+Paris           +02:00  CEST      Wed, 01 Jul 2015 02:00:00 +0200
+Beijing         +08:00  CST       Wed, 01 Jul 2015 08:00:00 +0800
+Tokyo           +09:00  JST       Wed, 01 Jul 2015 09:00:00 +0900
+```
 
 ## Customize
 
@@ -156,4 +176,4 @@ St Petersburg   +03:00  MSK       2015-07-01 03:00:00
 
 ### list_format
 
-Default format for the list (used when `-f` option does not present).
+Default format for the list.
