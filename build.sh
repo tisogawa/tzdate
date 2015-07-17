@@ -21,6 +21,4 @@ else
     php ./composer.phar update --no-dev
 fi
 
-php ./box.phar build
-mv tzdate.phar tzdate
-./tzdate
+php ./box.phar build && mv tzdate.phar tzdate && ./tzdate
