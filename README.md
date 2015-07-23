@@ -61,7 +61,7 @@ For example, you can use `'San Francisco'`, `sanfrancisco` or `sf` for it.
 
 See Customize section for cities that are not in IANA registry, or for alias/ abbreviation for cities.
 
-## Command option
+## Command options
 
 ### `-z`
 
@@ -96,6 +96,38 @@ London          +01:00  BST       Wed, 01 Jul 2015 01:00:00 +0100
 Paris           +02:00  CEST      Wed, 01 Jul 2015 02:00:00 +0200
 Beijing         +08:00  CST       Wed, 01 Jul 2015 08:00:00 +0800
 Tokyo           +09:00  JST       Wed, 01 Jul 2015 09:00:00 +0900
+```
+
+## More usage examples
+
+### Working with unixtime
+
+You can directly specify an unixtime number as the first argument.
+
+```
+$ tzdate 1437019200
+Honolulu        -10:00  HST       2015-07-15 18:00:00
+San Francisco   -07:00  PDT       2015-07-15 21:00:00
+New York        -04:00  EDT       2015-07-16 00:00:00
+UTC             +00:00  UTC       2015-07-16 04:00:00
+London          +01:00  BST       2015-07-16 05:00:00
+Paris           +02:00  CEST      2015-07-16 06:00:00
+Beijing         +08:00  CST       2015-07-16 12:00:00
+Tokyo           +09:00  JST       2015-07-16 13:00:00
+```
+
+To instantly know the unixtime of certain date/time in certain timezone, use `-f` option with `U` format.
+
+```
+$ tzdate '7/15 9pm' sf -f U
+Honolulu        -10:00  HST       1437019200
+San Francisco   -07:00  PDT       1437019200
+New York        -04:00  EDT       1437019200
+UTC             +00:00  UTC       1437019200
+London          +01:00  BST       1437019200
+Paris           +02:00  CEST      1437019200
+Beijing         +08:00  CST       1437019200
+Tokyo           +09:00  JST       1437019200
 ```
 
 ## Customize
