@@ -23,7 +23,7 @@ class Command extends BaseCommand
             ->addArgument('datetime', InputArgument::OPTIONAL, 'Date/time string', 'now')
             ->addArgument('datetime_timezone', InputArgument::OPTIONAL, 'Timezone for date/time', null)
             ->addOption('timezone', 'z', InputOption::VALUE_IS_ARRAY | InputOption::VALUE_REQUIRED, 'Timezone name(s)')
-            ->addOption('format', 'f', InputOption::VALUE_REQUIRED, 'String expression to format date/tme', 'Y-m-d H:i:s');
+            ->addOption('format', 'f', InputOption::VALUE_REQUIRED, 'String expression to format date/time', 'Y-m-d H:i:s');
     }
 
     /**
