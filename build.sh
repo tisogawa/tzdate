@@ -2,7 +2,7 @@
 
 if [ ! -f box.phar ];
 then
-    curl -LSs http://box-project.org/installer.php | php
+    curl -LSs https://box-project.github.io/box2/installer.php | php
 else
     php ./box.phar update
 fi
