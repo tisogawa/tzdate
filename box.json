@@ -18,7 +18,10 @@
         "Tester",
         "Tests"
       ],
-      "in": "vendor/symfony/console"
+      "in": [
+        "vendor/symfony/console",
+        "vendor/symfony/polyfill-mbstring"
+      ]
     }
   ],
   "git-version": "package_version",
