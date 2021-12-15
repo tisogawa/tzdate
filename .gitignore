@@ -10,3 +10,4 @@ phpunit.xml
 vendor
 res/config.json
 tzdate
+.phpunit.result.cache

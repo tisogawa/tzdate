@@ -4,7 +4,7 @@ Small command-line world clock to print certain date/time in multiple timezones,
 
 ## Require
 
-- PHP >= 5.3.3
+- PHP >= 8.1
 - PHP's [phar.readonly](http://php.net/phar.configuration#ini.phar.readonly) setting needs to be "Off" on install (should be resumed afterwards)
 
 ## Install
