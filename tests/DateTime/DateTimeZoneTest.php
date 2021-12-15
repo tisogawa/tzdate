@@ -2,26 +2,25 @@
 
 namespace TzDate\Test\DateTime;
 
+use Exception;
+use PHPUnit\Framework\TestCase;
 use TzDate\DateTime\DateTimeZone;
 
-class DateTimeZoneTest extends \PHPUnit_Framework_TestCase
+class DateTimeZoneTest extends TestCase
 {
-    /**
-     * @return array
-     */
-    public function certainCityNames()
+    public function certainCityNames(): array
     {
-        return array(
-            array('Calcutta', 'Asia/Kolkata', 'Calcutta'),
-            array('Kolkata', 'Asia/Kolkata', 'Kolkata'),
-            array('Buenos Aires', 'America/Argentina/Buenos_Aires', 'Buenos Aires'),
-            array('buenosaires', 'America/Argentina/Buenos_Aires', 'Buenos Aires'),
-            array('San Francisco', 'America/Los_Angeles', 'San Francisco'),
-            array('sanfrancisco', 'America/Los_Angeles', 'San Francisco'),
-            array('sf', 'America/Los_Angeles', 'San Francisco'),
-            array('losangeles', 'America/Los_Angeles', 'Los Angeles'),
-            array('la', 'America/Los_Angeles', 'Los Angeles'),
-        );
+        return [
+            ['Calcutta', 'Asia/Kolkata', 'Calcutta'],
+            ['Kolkata', 'Asia/Kolkata', 'Kolkata'],
+            ['Buenos Aires', 'America/Argentina/Buenos_Aires', 'Buenos Aires'],
+            ['buenosaires', 'America/Argentina/Buenos_Aires', 'Buenos Aires'],
+            ['San Francisco', 'America/Los_Angeles', 'San Francisco'],
+            ['sanfrancisco', 'America/Los_Angeles', 'San Francisco'],
+            ['sf', 'America/Los_Angeles', 'San Francisco'],
+            ['losangeles', 'America/Los_Angeles', 'Los Angeles'],
+            ['la', 'America/Los_Angeles', 'Los Angeles'],
+        ];
     }
 
     /**
@@ -30,7 +29,7 @@ class DateTimeZoneTest extends \PHPUnit_Framework_TestCase
      * @param string $identifier
      * @param string $cityName
      */
-    public function testCertainCityNames($input, $identifier, $cityName)
+    public function testCertainCityNames(string $input, string $identifier, string $cityName): void
     {
         $this->doTestConstructor($input, $identifier, $cityName);
     }
@@ -38,14 +37,15 @@ class DateTimeZoneTest extends \PHPUnit_Framework_TestCase
     /**
      * @return array
      */
-    public function defaultIdentifiers()
+    public function defaultIdentifiers(): array
     {
-        $data = array();
+        /** @noinspection DuplicatedCode */
+        $data = [];
         foreach (DateTimeZone::listIdentifiers() as $identifier) {
             $parts = explode('/', $identifier);
             $cityName = str_replace('_', ' ', array_pop($parts));
-            $data[] = array($identifier, $identifier, $cityName);
-            $data[] = array(strtolower(str_replace(' ', '', $identifier)), $identifier, $cityName);
+            $data[] = [$identifier, $identifier, $cityName];
+            $data[] = [strtolower(str_replace(' ', '', $identifier)), $identifier, $cityName];
         }
         return $data;
     }
@@ -56,22 +56,20 @@ class DateTimeZoneTest extends \PHPUnit_Framework_TestCase
      * @param string $identifier
      * @param string $cityName
      */
-    public function testDefaultIdentifiers($input, $identifier, $cityName)
+    public function testDefaultIdentifiers(string $input, string $identifier, string $cityName): void
     {
         $this->doTestConstructor($input, $identifier, $cityName);
     }
 
-    /**
-     * @return array
-     */
-    public function defaultCityNames()
+    public function defaultCityNames(): array
     {
-        $data = array();
+        /** @noinspection DuplicatedCode */
+        $data = [];
         foreach (DateTimeZone::listIdentifiers() as $identifier) {
             $parts = explode('/', $identifier);
             $cityName = str_replace('_', ' ', array_pop($parts));
-            $data[] = array($cityName, $identifier, $cityName);
-            $data[] = array(strtolower(str_replace(' ', '', $cityName)), $identifier, $cityName);
+            $data[] = [$cityName, $identifier, $cityName];
+            $data[] = [strtolower(str_replace(' ', '', $cityName)), $identifier, $cityName];
         }
         return $data;
     }
@@ -82,18 +80,17 @@ class DateTimeZoneTest extends \PHPUnit_Framework_TestCase
      * @param string $identifier
      * @param string $cityName
      */
-    public function testDefaultCityNames($input, $identifier, $cityName)
+    public function testDefaultCityNames(string $input, string $identifier, string $cityName): void
     {
         $this->doTestConstructor($input, $identifier, $cityName);
     }
 
-    private function doTestConstructor($input, $identifier, $cityName)
+    private function doTestConstructor(string $input, string $identifier, string $cityName): void
     {
         try {
             $dtz = new DateTimeZone($input);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $this->fail($e->getMessage());
-            return;
         }
         $this->assertSame($identifier, $dtz->getName());
         $this->assertSame($cityName, $dtz->getCityName());

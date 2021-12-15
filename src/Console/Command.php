@@ -13,23 +13,24 @@ use TzDate\DateTime\DateTimeZone;
 
 class Command extends BaseCommand
 {
-    /**
-     * {@inheritdoc}
-     */
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setName('tzdate')
             ->addArgument('datetime', InputArgument::OPTIONAL, 'Date/time string', 'now')
-            ->addArgument('datetime_timezone', InputArgument::OPTIONAL, 'Timezone for date/time', null)
+            ->addArgument('datetime_timezone', InputArgument::OPTIONAL, 'Timezone for date/time')
             ->addOption('timezone', 'z', InputOption::VALUE_IS_ARRAY | InputOption::VALUE_REQUIRED, 'Timezone name(s)')
             ->addOption('format', 'f', InputOption::VALUE_REQUIRED, 'String expression to format date/time', 'Y-m-d H:i:s');
     }
 
     /**
-     * {@inheritdoc}
+     * @param \Symfony\Component\Console\Input\InputInterface $input
+     * @param \Symfony\Component\Console\Output\OutputInterface $output
+     * @return int
+     * @throws \TzDate\DateTime\InvalidTimeValueException
+     * @throws \TzDate\DateTime\InvalidTimezoneValueException
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $datetime = $input->getArgument('datetime');
         $datetimeTimezone = $input->getArgument('datetime_timezone');
@@ -49,8 +50,8 @@ class Command extends BaseCommand
         $timezones[] = date_default_timezone_get();
 
         /** @var DateTime[] $list */
-        $list = array();
-        $sort = array();
+        $list = [];
+        $sort = [];
         foreach ($timezones as $timezone) {
             $dt = new DateTime($datetime, $datetimeTimezone);
             $dt->setTimezone($timezone);
@@ -69,5 +70,7 @@ class Command extends BaseCommand
                 $dt->format($format)
             ));
         }
+
+        return 0;
     }
 }

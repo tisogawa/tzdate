@@ -3,38 +3,26 @@
 namespace TzDate\DateTime;
 
 use DateTimeZone as BaseDateTimeZone;
+use Exception;
+use RuntimeException;
 
 class DateTimeZone extends BaseDateTimeZone
 {
-    /** @var array */
-    private static $cityNamesAndIdentifiersMap = array();
-    /** @var array */
-    private static $cityNameAliases = array();
+    private static array $cityNamesAndIdentifiersMap = [];
+    private static array $cityNameAliases = [];
+    private string|null $cityName = null;
 
-    /** @var string */
-    private $cityName;
-
-    /**
-     * @param array $map
-     */
-    public static function setCityNamesAndIdentifiersMap(array $map)
+    public static function setCityNamesAndIdentifiersMap(array $map): void
     {
         self::$cityNamesAndIdentifiersMap = $map;
     }
 
-    /**
-     * @param array $data
-     */
-    public static function setCityNameAliases(array $data)
+    public static function setCityNameAliases(array $data): void
     {
         self::$cityNameAliases = $data;
     }
 
-    /**
-     * @param BaseDateTimeZone $timezone
-     * @return string
-     */
-    public static function getCityNameFromTimezone(BaseDateTimeZone $timezone)
+    public static function getCityNameFromTimezone(BaseDateTimeZone $timezone): string
     {
         $parts = explode('/', $timezone->getName());
         return str_replace('_', ' ', array_pop($parts));
@@ -46,12 +34,12 @@ class DateTimeZone extends BaseDateTimeZone
      * @param string $timezone
      * @throws InvalidTimezoneValueException
      */
-    public function __construct($timezone)
+    public function __construct(string $timezone)
     {
         $identifier = $this->searchIdentifier($timezone);
         try {
             parent::__construct($identifier['identifier']);
-        } catch (\Exception $e) {
+        } catch (Exception) {
             throw new InvalidTimezoneValueException(sprintf(
                 '"%s" does not appear to be a valid timezone value.', $identifier['identifier']
             ));
@@ -61,65 +49,49 @@ class DateTimeZone extends BaseDateTimeZone
         }
     }
 
-    /**
-     * @return string
-     */
-    public function getCityName()
+    public function getCityName(): string
     {
-        if (isset($this->cityName)) {
-            return $this->cityName;
-        }
-        return self::getCityNameFromTimezone($this);
+        return $this->cityName ?? self::getCityNameFromTimezone($this);
     }
 
-    /**
-     * @param string $timezone
-     * @return array
-     */
-    private function searchIdentifier($timezone)
+    private function searchIdentifier(string $timezone): array
     {
         static $cityNames, $identifiers;
         if (!isset($cityNames) && !isset($identifiers)) {
-            $cityNames = array();
-            $identifiers = array();
-            foreach (DateTimeZone::listIdentifiers() as $identifier) {
+            $cityNames = [];
+            $identifiers = [];
+            foreach (self::listIdentifiers() as $identifier) {
                 $parts = explode('/', $identifier);
                 $index = strtolower(str_replace('_', '', array_pop($parts)));
-                $cityNames[$index] = array(
+                $cityNames[$index] = [
                     'identifier' => $identifier,
-                );
+                ];
                 $index = strtolower(str_replace('_', '', $identifier));
-                $identifiers[$index] = array(
+                $identifiers[$index] = [
                     'identifier' => $identifier,
-                );
+                ];
             }
             foreach (self::$cityNamesAndIdentifiersMap as $cityName => $identifier) {
-                $index = strtolower(str_replace(array('_', ' '), array('', ''), $cityName));
-                $cityNames[$index] = array(
-                    'city_name' => $cityName,
+                $index = strtolower(str_replace(['_', ' '], ['', ''], $cityName));
+                $cityNames[$index] = [
+                    'city_name'  => $cityName,
                     'identifier' => $identifier,
-                );
+                ];
             }
             foreach (self::$cityNameAliases as $alias => $cityName) {
-                $search = strtolower(str_replace(array('_', ' '), array('', ''), $cityName));
+                $search = strtolower(str_replace(['_', ' '], ['', ''], $cityName));
                 if (!isset($cityNames[$search])) {
-                    throw new \RuntimeException(sprintf(
+                    throw new RuntimeException(sprintf(
                         'City name "%s" for alias "%s" not found', $cityName, $alias
                     ));
                 }
-                $index = strtolower(str_replace(array('_', ' '), array('', ''), $alias));
+                $index = strtolower(str_replace(['_', ' '], ['', ''], $alias));
                 $cityNames[$index] = $cityNames[$search];
             }
         }
-        $search = strtolower(str_replace(array('_', ' '), array('', ''), $timezone));
-        if (isset($identifiers[$search])) {
-            return $identifiers[$search];
-        }
-        if (isset($cityNames[$search])) {
-            return $cityNames[$search];
-        }
-        return array(
-            'identifier' => $timezone,
-        );
+        $search = strtolower(str_replace(['_', ' '], ['', ''], $timezone));
+        return $identifiers[$search] ?? $cityNames[$search] ?? [
+                'identifier' => $timezone,
+            ];
     }
 }
