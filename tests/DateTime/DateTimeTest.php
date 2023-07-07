@@ -1,51 +1,54 @@
 <?php
+declare(strict_types=1);
 
-namespace TzDate\Test\DateTime;
+namespace TzDate\DateTime;
 
-use TzDate\DateTime\DateTime;
-use TzDate\DateTime\DateTimeZone;
+use PHPUnit\Framework\TestCase;
 
-class DateTimeTest extends \PHPUnit_Framework_TestCase
+class DateTimeTest extends TestCase
 {
-    private static $timezoneToRestore;
+    private static string $timezoneToRestore;
 
-    public static function setUpBeforeClass()
+    public static function setUpBeforeClass(): void
     {
         self::$timezoneToRestore = date_default_timezone_get();
     }
 
-    protected function tearDown()
+    protected function tearDown(): void
     {
         date_default_timezone_set(self::$timezoneToRestore);
     }
 
-    public function timezones()
+    /**
+     * @throws \Exception
+     */
+    public static function timezones(): array
     {
-        $date_times = array(
+        $date_times = [
             '2015-01-01 00:00:00',
             '2015-07-01 00:00:00',
-        );
-        $timezones = array(
+        ];
+        $timezones = [
             'Asia/Tokyo',
             'America/Los_Angeles',
             'America/Phoenix',
             'Europe/London',
             'UTC',
-        );
+        ];
 
-        $result = array();
+        $result = [];
         foreach ($date_times as $date_time) {
             $dt = new \DateTime($date_time, new \DateTimezone('UTC'));
-            $local_values = array();
+            $local_values = [];
             foreach ($timezones as $timezone) {
                 $local_values[$timezone] = $dt->setTimezone(new \DateTimeZone($timezone))->format('Y-m-d H:i:s');
             }
             foreach ($timezones as $timezone) {
-                $result["{$timezone} @ {$date_time}"] = array(
+                $result["$timezone @ $date_time"] = [
                     $timezone,
                     $dt->setTimezone(new \DateTimeZone($timezone))->format('Y-m-d H:i:s'),
                     $local_values,
-                );
+                ];
             }
         }
         return $result;
@@ -53,11 +56,10 @@ class DateTimeTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @dataProvider timezones
-     *
-     * @param string $timezone
-     * @param string $datetime_string
+     * @throws \TzDate\DateTime\InvalidTimeValueException
+     * @throws \TzDate\DateTime\InvalidTimezoneValueException
      */
-    public function testConstructor($timezone, $datetime_string)
+    public function testConstructor(string $timezone, string $datetime_string): void
     {
         date_default_timezone_set($timezone);
 
@@ -109,12 +111,10 @@ class DateTimeTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @dataProvider timezones
-     *
-     * @param string $timezone
-     * @param string $datetime_string
-     * @param array $local_values
+     * @throws \TzDate\DateTime\InvalidTimeValueException
+     * @throws \TzDate\DateTime\InvalidTimezoneValueException
      */
-    public function testSetTimezone($timezone, $datetime_string, array $local_values)
+    public function testSetTimezone(string $timezone, string $datetime_string, array $local_values): void
     {
         date_default_timezone_set($timezone);
 

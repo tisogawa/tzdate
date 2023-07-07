@@ -1,38 +1,31 @@
 <?php
+declare(strict_types=1);
 
 namespace TzDate\Console;
 
 use Symfony\Component\Console\Application as BaseApplication;
+use Symfony\Component\Console\Input\InputDefinition;
 use Symfony\Component\Console\Input\InputInterface;
 
 class Application extends BaseApplication
 {
-    /**
-     * {@inheritdoc}
-     */
-    public function getDefinition()
+    public function getDefinition(): InputDefinition
     {
         $inputDefinition = parent::getDefinition();
         $inputDefinition->setArguments();
         return $inputDefinition;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function getCommandName(InputInterface $input)
+    protected function getCommandName(InputInterface $input): string
     {
         return 'tzdate';
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function getDefaultCommands()
+    protected function getDefaultCommands(): array
     {
         return array_merge(
             parent::getDefaultCommands(),
-            array(new Command())
+            [new Command()]
         );
     }
 }

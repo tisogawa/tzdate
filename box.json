@@ -1,5 +1,4 @@
 {
-  "chmod": "0755",
   "directories": [
     "src",
     "res"
@@ -9,23 +8,17 @@
   ],
   "finder": [
     {
-      "name": "*.php",
       "in": "vendor/composer"
     },
     {
-      "name": "*.php",
+      "in": "vendor/symfony",
       "exclude": [
         "Tester",
         "Tests"
-      ],
-      "in": [
-        "vendor/symfony/console",
-        "vendor/symfony/polyfill-mbstring"
       ]
     }
   ],
   "git-version": "package_version",
   "main": "bin/console",
-  "output": "tzdate.phar",
-  "stub": true
+  "output": "tzdate"
 }

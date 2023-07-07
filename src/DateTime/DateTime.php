@@ -1,24 +1,21 @@
 <?php
+declare(strict_types=1);
 
 namespace TzDate\DateTime;
 
 use DateTime as BaseDateTime;
 use DateTimeZone as BaseDateTimeZone;
+use Exception;
 
 class DateTime extends BaseDateTime
 {
-    /** @var string */
-    private $timezoneCityName;
+    private string|null $timezoneCityName = null;
 
     /**
-     * Constructor
-     *
-     * @param int|string $time
-     * @param string|BaseDateTimeZone $timezone
-     * @throws InvalidTimeValueException
-     * @throws InvalidTimezoneValueException
+     * @throws \TzDate\DateTime\InvalidTimeValueException
+     * @throws \TzDate\DateTime\InvalidTimezoneValueException
      */
-    public function __construct($time = 'now', $timezone = null)
+    public function __construct(string|int $time = 'now', string|BaseDateTimeZone|null $timezone = null)
     {
         if ($timezone === null) {
             $timezone = new DateTimeZone(date_default_timezone_get());
@@ -27,13 +24,13 @@ class DateTime extends BaseDateTime
             $this->timezoneCityName = $timezone->getCityName();
         }
         if (is_numeric($time)) {
-            $time = '@' . round($time);
+            $time = '@' . round((float)$time);
         }
         try {
             parent::__construct($time, $timezone);
         } catch (InvalidTimezoneValueException $e) {
             throw $e;
-        } catch (\Exception $e) {
+        } catch (Exception) {
             throw new InvalidTimeValueException(sprintf(
                 '"%s" could not be parsed as a date/time value.', $time
             ));
@@ -46,10 +43,9 @@ class DateTime extends BaseDateTime
     }
 
     /**
-     * @param string|BaseDateTimeZone $timezone
-     * @return $this
+     * @throws \TzDate\DateTime\InvalidTimezoneValueException
      */
-    public function setTimezone($timezone)
+    public function setTimezone(string|BaseDateTimeZone $timezone): DateTime
     {
         if (!$timezone instanceof BaseDateTimeZone) {
             $timezone = new DateTimeZone($timezone);
@@ -58,21 +54,12 @@ class DateTime extends BaseDateTime
         return parent::setTimezone($timezone);
     }
 
-    /**
-     * @return string
-     */
-    public function getTimezoneCityName()
+    public function getTimezoneCityName(): string
     {
-        if (isset($this->timezoneCityName)) {
-            return $this->timezoneCityName;
-        }
-        return DateTimeZone::getCityNameFromTimezone($this->getTimezone());
+        return $this->timezoneCityName ?? DateTimeZone::getCityNameFromTimezone($this->getTimezone());
     }
 
-    /**
-     * @return string
-     */
-    public function formatTimezoneOffset()
+    public function formatTimezoneOffset(): string
     {
         $offset = $this->getOffset();
         return ($offset < 0 ? '-' : '+') . gmdate('H:i', abs($offset));
