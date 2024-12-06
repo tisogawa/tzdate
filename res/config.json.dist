@@ -10,15 +10,17 @@
     "Tokyo"
   ],
   "cities": {
-    "San Francisco": "America/Los_Angeles",
     "Beijing": "Asia/Shanghai",
-    "Calcutta": "Asia/Kolkata"
+    "Calcutta": "Asia/Kolkata",
+    "Saigon": "Asia/Ho_Chi_Minh",
+    "San Francisco": "America/Los_Angeles"
   },
   "aliases": {
-    "NY": "New York",
+    "HK": "Hong Kong",
+    "KL": "Kuala Lumpur",
     "LA": "Los Angeles",
-    "SF": "San Francisco",
-    "HK": "Hong Kong"
+    "NY": "New York",
+    "SF": "San Francisco"
   },
   "list_format": "<info>%1$-15s</info> %2$-7s %3$-9s %4$s"
 }

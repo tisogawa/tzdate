@@ -1,21 +1,20 @@
 # tzdate
 
-Small command-line world clock to print certain date/time in multiple timezones, built on top of PHP.
+Command-line tool to print the date-time in multiple timezones, built on top of PHP.
 
 ## Require
 
 - PHP >= 8.1
-- PHP's [phar.readonly](http://php.net/phar.configuration#ini.phar.readonly) setting needs to be "Off" on install (should be resumed afterwards)
 
 ## Install
 
-Run `build.sh` to build `tzdate` standalone executable.
+Run `build.sh` to build the `tzdate` standalone executable.
 
 You can place the file anywhere you can easily access, such as `/usr/local/bin`.
 
 ## Basic usage
 
-Print current date/time in default timezones.
+Print the current date-time in default timezones.
 
 ```
 $ tzdate
@@ -29,9 +28,9 @@ Beijing         +08:00  CST       2015-07-01 08:00:00
 Tokyo           +09:00  JST       2015-07-01 09:00:00
 ```
 
-See Customize section to modify the default timezones.
+See the Customize section below to modify the default timezones.
 
-Type as the following to print the date/time of 9pm, July 15 (current year) in San Francisco.
+Type the following to print the date-time of 9pm, July 15 (current year) in San Francisco.
 
 ```
 $ tzdate '7/15 9pm' sf
@@ -45,21 +44,21 @@ Beijing         +08:00  CST       2015-07-16 12:00:00
 Tokyo           +09:00  JST       2015-07-16 13:00:00
 ```
 
-The first argument is [string expression of date/time](http://php.net/datetime.formats) or unixtime number.
+The first argument is a [string expression of date-time](http://php.net/datetime.formats) or Unix time number.
 
-The second argument is the timezone name for the date/time
+The second argument is the timezone name for the date-time
 (If omitted, the timezone defined as [date.timezone](http://php.net/datetime.configuration#ini.date.timezone) of PHP will be used).
 
 You can use the following forms to specify the timezone. All case-insensitive, and underscores and spaces can be omitted.
 
 * [IANA Timezone Identifier](http://php.net/timezones) (e.g. `America/Los_Angeles`)
-* City name part of the identifier (e.g. `'Los Angeles'`, `losangeles`)
-* Abbreviation can also be used for some cities (e.g. `la`)
+* The city name part of the identifier (e.g. `'Los Angeles'`, `losangeles`)
+* Abbreviations can also be used for some cities (e.g. `la`)
 
-You can even use the name of some cities that are not in IANA registry.
+You can even use the names of some cities that are not in the IANA registry.
 For example, you can use `'San Francisco'`, `sanfrancisco` or `sf` for it.
 
-See Customize section for cities that are not in IANA registry, or for alias/ abbreviation for cities.
+For cities that are not in the IANA registry or for aliases/abbreviations of cities, see the Customize section below.
 
 ## Command options
 
@@ -67,7 +66,7 @@ See Customize section for cities that are not in IANA registry, or for alias/ ab
 
 You can use `-z` option to customize the timezones of the list.
 
-For example, to print current date/time in Hong Kong, Kolkata and Anchorage, type as the following.
+For example, to print the current date-time in Hong Kong, Kolkata, and Anchorage, type the following.
 
 ```
 $ tzdate -z hk -z kolkata -z anchorage
@@ -77,14 +76,14 @@ Kolkata         +05:30  IST       2015-07-01 05:30:00
 Hong Kong       +08:00  HKT       2015-07-01 08:00:00
 ```
 
-List always include the timezone defined as [date.timezone](http://php.net/datetime.configuration#ini.date.timezone) of PHP.
+The list always includes the timezone defined as [date.timezone](http://php.net/datetime.configuration#ini.date.timezone) of PHP.
 
 ### `-f`
 
-With `-f` option, you can customize the date/time format in the list.
+With `-f` option, you can customize the date-time format in the list.
 Any formats accepted by PHP's [`date()`](http://php.net/date) function can be used.
 
-For example, type the following to print date/time in RFC 2822 form (which can be specified by `r`).
+For example, type the following to print the date-time in RFC 2822 form (which can be specified by `r`).
 
 ```
 $ tzdate -f r
@@ -100,9 +99,9 @@ Tokyo           +09:00  JST       Wed, 01 Jul 2015 09:00:00 +0900
 
 ## More usage examples
 
-### Working with unixtime
+### Working with Unix time
 
-You can directly specify an unixtime number as the first argument.
+You can directly specify a Unix time number as the first argument.
 
 ```
 $ tzdate 1437019200
@@ -116,7 +115,7 @@ Beijing         +08:00  CST       2015-07-16 12:00:00
 Tokyo           +09:00  JST       2015-07-16 13:00:00
 ```
 
-To instantly know the unixtime of certain date/time in certain timezone, use `-f` option with `U` format.
+To instantly know the Unix time of a certain date-time in a certain timezone, use `-f` option with `U` format.
 
 ```
 $ tzdate '7/15 9pm' sf -f U
@@ -133,13 +132,13 @@ Tokyo           +09:00  JST       1437019200
 ## Customize
 
 Copy [`res/config.json.dist`](https://github.com/tisogawa/tzdate/blob/master/res/config.json.dist) to `res/config.json`
-and modify the entries. Entries in `res/config.json` will override the entry in `.dist`.
+and modify the entries. The entries in `res/config.json` will override the entry in `.dist`.
 
 ### default_timezones
 
-Default timezones for the list (used when `-z` option does not present).
+Default timezones for the list (used when `-z` option is not present).
 
-For example, to print date/time in 11 timezones of Russia by default, edit the entry as follows.
+For example, to print the date-time in Russia's 11 timezones by default, edit the entry as follows.
 
 ```json
 {
@@ -161,33 +160,33 @@ For example, to print date/time in 11 timezones of Russia by default, edit the e
 
 ### cities
 
-You can define cities that are not in IANA registry.
+You can define cities that are not in the IANA registry.
 
-For example, Saint Petersburg is not in IANA registry but if you want to specify timezone by the name,
+For example, St. Petersburg, Florida is not in IANA registry but if you want to specify the timezone by the name,
 add the following line to the entry.
 
 ```json
 {
   "cities": {
-    "St Petersburg": "Europe/Moscow"
+    "St Petersburg": "America/New_York"
   }
 }
 ```
 
-Then you can give `'St Petersburg'` or `stpetersburg` to the command.
+Then, you can give `'St Petersburg'` or `stpetersburg` to the command.
 
 ```
 $ tzdate -z stpetersburg
+St Petersburg   -04:00  EDT       2015-06-30 20:00:00
 UTC             +00:00  UTC       2015-07-01 00:00:00
-St Petersburg   +03:00  MSK       2015-07-01 03:00:00
 ```
 
 ### aliases
 
-You can define alias/ abbreviation for cities.
+You can define aliases/abbreviations for cities.
 
-For example, if you do not want to type `stpetersburg` for Saint Petersburg,
-add the following lines to the entry (For this example, `"St Petersburg"` must be in `cities` entry as the example above).
+For example, if you have added `"St Petersburg"` in the `cities` entry as described above,
+add the following lines to the entry, too.
 
 ```json
 {
@@ -198,14 +197,14 @@ add the following lines to the entry (For this example, `"St Petersburg"` must b
 }
 ```
 
-And now you can use `spb` or `stpete` instead of `stpetersburg`.
+Then, you can use `spb` or `stpete` instead of `'St Petersburg'` or `stpetersburg`.
 
 ```
 $ tzdate -z spb
+St Petersburg   -04:00  EDT       2015-06-30 20:00:00
 UTC             +00:00  UTC       2015-07-01 00:00:00
-St Petersburg   +03:00  MSK       2015-07-01 03:00:00
 ```
 
 ### list_format
 
-Default format for the list.
+The default format for the list.
