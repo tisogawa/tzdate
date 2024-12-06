@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace TzDate\DateTime;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 class DateTimeTest extends TestCase
@@ -55,10 +56,10 @@ class DateTimeTest extends TestCase
     }
 
     /**
-     * @dataProvider timezones
      * @throws \TzDate\DateTime\InvalidTimeValueException
      * @throws \TzDate\DateTime\InvalidTimezoneValueException
      */
+    #[DataProvider('timezones')]
     public function testConstructor(string $timezone, string $datetime_string): void
     {
         date_default_timezone_set($timezone);
@@ -110,10 +111,10 @@ class DateTimeTest extends TestCase
     }
 
     /**
-     * @dataProvider timezones
      * @throws \TzDate\DateTime\InvalidTimeValueException
      * @throws \TzDate\DateTime\InvalidTimezoneValueException
      */
+    #[DataProvider('timezones')]
     public function testSetTimezone(string $timezone, string $datetime_string, array $local_values): void
     {
         date_default_timezone_set($timezone);

@@ -39,25 +39,26 @@ class Config
      */
     private function loadConfig(): void
     {
-        $config_dir = __DIR__ . '/../../res';
-        $files = [
-            $config_dir . '/config.json.dist',
-            $config_dir . '/config.json',
-        ];
-        $options = [$this->config];
-        foreach ($files as $file) {
+        $configs = [];
+        foreach ([
+                     __DIR__ . '/../../res/config.json.dist',
+                     __DIR__ . '/../../res/config.json',
+                 ] as $file) {
             if (!file_exists($file)) {
                 continue;
             }
-            $config = json_decode(file_get_contents($file), true, 512, JSON_THROW_ON_ERROR);
-            if (!is_array($config)) {
-                throw new RuntimeException(sprintf(
-                    'Failed reading configuration from %s', $file
-                ));
-            }
-            $options[] = $config;
+            $configs[] = json_decode(file_get_contents($file), true, 512, JSON_THROW_ON_ERROR);
         }
-        $options[] = self::$additionalConfig;
-        $this->config = array_merge(...$options);
+        $configs[] = self::$additionalConfig;
+
+        foreach ($configs as $config) {
+            foreach ($config as $k => $v) {
+                if (($k === 'cities' || $k === 'aliases') && array_key_exists($k, $this->config)) {
+                    $this->config[$k] = array_merge($this->config[$k], $v);
+                } else {
+                    $this->config[$k] = $v;
+                }
+            }
+        }
     }
 }

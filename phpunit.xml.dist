@@ -1,14 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
 <phpunit colors="true"
          stopOnFailure="false"
          bootstrap="tests/bootstrap.php"
-    >
-
-  <testsuites>
-    <testsuite name="test">
-      <directory>tests</directory>
-    </testsuite>
-  </testsuites>
-
+         displayDetailsOnTestsThatTriggerDeprecations="true"
+         displayDetailsOnTestsThatTriggerErrors="true"
+         displayDetailsOnTestsThatTriggerNotices="true"
+         displayDetailsOnTestsThatTriggerWarnings="true"
+         displayDetailsOnPhpunitDeprecations="true"
+>
+    <testsuites>
+        <testsuite name="test">
+            <directory>tests</directory>
+        </testsuite>
+    </testsuites>
 </phpunit>
