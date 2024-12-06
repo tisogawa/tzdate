@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace TzDate\DateTime;
 
 use Exception;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 class DateTimeZoneTest extends TestCase
@@ -24,9 +25,7 @@ class DateTimeZoneTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider certainCityNames
-     */
+    #[DataProvider('certainCityNames')]
     public function testCertainCityNames(string $input, string $identifier, string $cityName): void
     {
         $this->doTestConstructor($input, $identifier, $cityName);
@@ -48,9 +47,7 @@ class DateTimeZoneTest extends TestCase
         return $data;
     }
 
-    /**
-     * @dataProvider defaultIdentifiers
-     */
+    #[DataProvider('defaultIdentifiers')]
     public function testDefaultIdentifiers(string $input, string $identifier, string $cityName): void
     {
         $this->doTestConstructor($input, $identifier, $cityName);
@@ -69,9 +66,7 @@ class DateTimeZoneTest extends TestCase
         return $data;
     }
 
-    /**
-     * @dataProvider defaultCityNames
-     */
+    #[DataProvider('defaultCityNames')]
     public function testDefaultCityNames(string $input, string $identifier, string $cityName): void
     {
         $this->doTestConstructor($input, $identifier, $cityName);
