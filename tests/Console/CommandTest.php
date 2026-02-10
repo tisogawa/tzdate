@@ -5,7 +5,6 @@ namespace TzDate\Console;
 
 use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
-use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Tester\CommandTester;
 
 class CommandTest extends TestCase
@@ -13,9 +12,7 @@ class CommandTest extends TestCase
     public function testDefaultArgumentsAndOptions(): void
     {
         $tester = $this->initCommandTester();
-        $tester->execute([
-            'command' => 'tzdate',
-        ]);
+        $tester->execute([]);
 
         $this->assertSame('now', $tester->getInput()->getArgument('datetime'));
         $this->assertSame([], $tester->getInput()->getOption('timezone'));
@@ -37,9 +34,7 @@ class CommandTest extends TestCase
     public function testDefaultExecution(): void
     {
         $tester = $this->initCommandTester();
-        $tester->execute([
-            'command' => 'tzdate',
-        ]);
+        $tester->execute([]);
 
         $lines = explode(PHP_EOL, trim($tester->getDisplay()));
         $found = 0;
@@ -56,7 +51,6 @@ class CommandTest extends TestCase
     public function initCommandTester(): CommandTester
     {
         $application = new Application();
-        $application->add(new Command());
         $command = $application->find('tzdate');
         return new CommandTester($command);
     }
