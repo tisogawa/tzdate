@@ -4,7 +4,7 @@ Command-line tool to print the date-time in multiple timezones, built on top of 
 
 ## Require
 
-- PHP >= 8.1
+- PHP >= 8.2
 
 ## Install
 
