@@ -11,12 +11,10 @@
   },
   "autoload": {
     "psr-4": {
-      "TzDate\\": ["src", "tests"]
-    }
-  },
-  "config": {
-    "platform": {
-      "php": "8.5"
+      "TzDate\\": [
+        "src",
+        "tests"
+      ]
     }
   }
 }
