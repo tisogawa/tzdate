@@ -3,11 +3,11 @@
   "description": "Small command-line world clock to print certain date/time in multiple timezones, built on top of PHP.",
   "license": "MIT",
   "require": {
-    "symfony/console": "^6.2"
+    "symfony/console": "^v7 || ^v8"
   },
   "require-dev": {
     "roave/security-advisories": "dev-latest",
-    "phpunit/phpunit": "^10.5"
+    "phpunit/phpunit": "^11 || ^13"
   },
   "autoload": {
     "psr-4": {
@@ -16,7 +16,7 @@
   },
   "config": {
     "platform": {
-      "php": "8.4"
+      "php": "8.5"
     }
   }
 }

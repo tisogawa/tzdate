@@ -58,9 +58,10 @@ class DateTimeTest extends TestCase
     /**
      * @throws \TzDate\DateTime\InvalidTimeValueException
      * @throws \TzDate\DateTime\InvalidTimezoneValueException
+     * @noinspection PhpUnusedParameterInspection
      */
     #[DataProvider('timezones')]
-    public function testConstructor(string $timezone, string $datetime_string): void
+    public function testConstructor(string $timezone, string $datetime_string, array $local_values): void
     {
         date_default_timezone_set($timezone);
 
