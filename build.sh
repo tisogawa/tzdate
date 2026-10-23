@@ -1,12 +1,19 @@
 #!/usr/bin/env sh
 
-curl -sLO https://github.com/box-project/box/releases/latest/download/box.phar
-curl -sLO https://github.com/composer/composer/releases/latest/download/composer.phar
+set -eu
 
-if [ -e ./composer.lock ]; then
-  php ./composer.phar update --no-dev
-else
-  php ./composer.phar install --no-dev
+cd "$(dirname "$0")"
+
+if ! command -v composer >/dev/null 2>&1; then
+  echo "Composer is required: https://getcomposer.org/download/" >&2
+  exit 1
 fi
 
-php -d error_reporting=24575 ./box.phar compile && ./tzdate
+# Box is managed in tools/box (its own composer.lock, updated by Dependabot)
+composer install --working-dir=tools/box --no-interaction
+composer audit --working-dir=tools/box
+
+composer install --no-dev --no-interaction
+composer audit --no-dev
+
+php -d error_reporting=24575 tools/box/vendor/bin/box compile && ./tzdate

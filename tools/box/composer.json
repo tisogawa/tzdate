@@ -1,0 +1,15 @@
+{
+  "name": "tisogawa/tzdate-tools-box",
+  "description": "Box (PHAR compiler) used by build.sh to build the tzdate executable.",
+  "type": "project",
+  "license": "MIT",
+  "require": {
+    "humbug/box": "^4.7"
+  },
+  "config": {
+    "platform": {
+      "php": "8.4.99"
+    },
+    "sort-packages": true
+  }
+}
