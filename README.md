@@ -146,8 +146,11 @@ Tokyo           +09:00  JST       1437019200
 
 ## Customize
 
+The configuration is bundled into the `tzdate` executable at build time,
+so customizing it requires [building the executable yourself](#install) with `build.sh`.
+
 Copy [`res/config.json.dist`](https://github.com/tisogawa/tzdate/blob/master/res/config.json.dist) to `res/config.json`
-and modify the entries. The entries in `res/config.json` will override the entry in `.dist`.
+and modify the entries, then run `build.sh`. The entries in `res/config.json` will override the entry in `.dist`.
 
 ### default_timezones
 

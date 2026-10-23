@@ -3,10 +3,9 @@
 .DS_Store
 ._.DS_Store
 .idea
-!.gitkeep
 *.phar
 phpunit.xml
 vendor
 res/config.json
-tzdate
+/tzdate
 .phpunit.result.cache
