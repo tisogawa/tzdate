@@ -4,11 +4,26 @@ Command-line tool to print the date-time in multiple timezones, built on top of 
 
 ## Require
 
-- PHP >= 8.2
+- PHP >= 8.4
 
 ## Install
 
-Run `build.sh` to build the `tzdate` standalone executable.
+Download the `tzdate` executable from the [latest release](https://github.com/tisogawa/tzdate/releases/latest),
+and make it executable.
+
+```
+chmod +x tzdate
+```
+
+The executable is built by GitHub Actions with a build provenance attestation.
+You can verify it with the [GitHub CLI](https://cli.github.com/).
+
+```
+gh attestation verify tzdate --repo tisogawa/tzdate
+```
+
+Alternatively, run `build.sh` to build the executable yourself ([Composer](https://getcomposer.org/) is required).
+The script installs [Box](https://github.com/box-project/box) into `tools/box` with Composer and compiles the executable.
 
 You can place the file anywhere you can easily access, such as `/usr/local/bin`.
 
@@ -24,7 +39,7 @@ New York        -04:00  EDT       2015-06-30 20:00:00
 UTC             +00:00  UTC       2015-07-01 00:00:00
 London          +01:00  BST       2015-07-01 01:00:00
 Paris           +02:00  CEST      2015-07-01 02:00:00
-Beijing         +08:00  CST       2015-07-01 08:00:00
+Shanghai        +08:00  CST       2015-07-01 08:00:00
 Tokyo           +09:00  JST       2015-07-01 09:00:00
 ```
 
@@ -40,18 +55,18 @@ New York        -04:00  EDT       2015-07-16 00:00:00
 UTC             +00:00  UTC       2015-07-16 04:00:00
 London          +01:00  BST       2015-07-16 05:00:00
 Paris           +02:00  CEST      2015-07-16 06:00:00
-Beijing         +08:00  CST       2015-07-16 12:00:00
+Shanghai        +08:00  CST       2015-07-16 12:00:00
 Tokyo           +09:00  JST       2015-07-16 13:00:00
 ```
 
-The first argument is a [string expression of date-time](http://php.net/datetime.formats) or Unix time number.
+The first argument is a [string expression of date-time](https://www.php.net/datetime.formats) or Unix time number.
 
 The second argument is the timezone name for the date-time
-(If omitted, the timezone defined as [date.timezone](http://php.net/datetime.configuration#ini.date.timezone) of PHP will be used).
+(If omitted, the timezone defined as [date.timezone](https://www.php.net/datetime.configuration#ini.date.timezone) of PHP will be used).
 
 You can use the following forms to specify the timezone. All case-insensitive, and underscores and spaces can be omitted.
 
-* [IANA Timezone Identifier](http://php.net/timezones) (e.g. `America/Los_Angeles`)
+* [IANA Timezone Identifier](https://www.php.net/timezones) (e.g. `America/Los_Angeles`)
 * The city name part of the identifier (e.g. `'Los Angeles'`, `losangeles`)
 * Abbreviations can also be used for some cities (e.g. `la`)
 
@@ -76,12 +91,12 @@ Kolkata         +05:30  IST       2015-07-01 05:30:00
 Hong Kong       +08:00  HKT       2015-07-01 08:00:00
 ```
 
-The list always includes the timezone defined as [date.timezone](http://php.net/datetime.configuration#ini.date.timezone) of PHP.
+The list always includes the timezone defined as [date.timezone](https://www.php.net/datetime.configuration#ini.date.timezone) of PHP.
 
 ### `-f`
 
 With `-f` option, you can customize the date-time format in the list.
-Any formats accepted by PHP's [`date()`](http://php.net/date) function can be used.
+Any formats accepted by PHP's [`date()`](https://www.php.net/date) function can be used.
 
 For example, type the following to print the date-time in RFC 2822 form (which can be specified by `r`).
 
@@ -93,7 +108,7 @@ New York        -04:00  EDT       Tue, 30 Jun 2015 20:00:00 -0400
 UTC             +00:00  UTC       Wed, 01 Jul 2015 00:00:00 +0000
 London          +01:00  BST       Wed, 01 Jul 2015 01:00:00 +0100
 Paris           +02:00  CEST      Wed, 01 Jul 2015 02:00:00 +0200
-Beijing         +08:00  CST       Wed, 01 Jul 2015 08:00:00 +0800
+Shanghai        +08:00  CST       Wed, 01 Jul 2015 08:00:00 +0800
 Tokyo           +09:00  JST       Wed, 01 Jul 2015 09:00:00 +0900
 ```
 
@@ -111,7 +126,7 @@ New York        -04:00  EDT       2015-07-16 00:00:00
 UTC             +00:00  UTC       2015-07-16 04:00:00
 London          +01:00  BST       2015-07-16 05:00:00
 Paris           +02:00  CEST      2015-07-16 06:00:00
-Beijing         +08:00  CST       2015-07-16 12:00:00
+Shanghai        +08:00  CST       2015-07-16 12:00:00
 Tokyo           +09:00  JST       2015-07-16 13:00:00
 ```
 
@@ -125,7 +140,7 @@ New York        -04:00  EDT       1437019200
 UTC             +00:00  UTC       1437019200
 London          +01:00  BST       1437019200
 Paris           +02:00  CEST      1437019200
-Beijing         +08:00  CST       1437019200
+Shanghai        +08:00  CST       1437019200
 Tokyo           +09:00  JST       1437019200
 ```
 
@@ -207,4 +222,16 @@ UTC             +00:00  UTC       2015-07-01 00:00:00
 
 ### list_format
 
-The default format for the list.
+The format of each line in the list, given to PHP's [`sprintf()`](https://www.php.net/sprintf).
+The arguments are, in order, the city name, the UTC offset, the timezone abbreviation, and the formatted date-time.
+[Symfony Console formatting tags](https://symfony.com/doc/current/console/coloring.html) such as `<info>` can be used.
+
+```json
+{
+  "list_format": "<info>%1$-15s</info> %2$-7s %3$-9s %4$s"
+}
+```
+
+## License
+
+MIT License. See [LICENSE](LICENSE) for details.
