@@ -5,7 +5,6 @@
 .idea
 !.gitkeep
 *.phar
-composer.lock
 phpunit.xml
 vendor
 res/config.json

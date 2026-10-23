@@ -1,8 +1,28 @@
 {
   "name": "tisogawa/tzdate",
   "description": "Small command-line world clock to print certain date/time in multiple timezones, built on top of PHP.",
+  "type": "project",
   "license": "MIT",
+  "keywords": [
+    "cli",
+    "timezone",
+    "world clock",
+    "datetime"
+  ],
+  "homepage": "https://github.com/tisogawa/tzdate",
+  "authors": [
+    {
+      "name": "Tadasu Isogawa",
+      "homepage": "https://github.com/tisogawa"
+    }
+  ],
+  "support": {
+    "issues": "https://github.com/tisogawa/tzdate/issues",
+    "source": "https://github.com/tisogawa/tzdate",
+    "security": "https://github.com/tisogawa/tzdate/security/policy"
+  },
   "require": {
+    "php": ">=8.4",
     "symfony/console": "^v7 || ^v8"
   },
   "require-dev": {
@@ -11,10 +31,18 @@
   },
   "autoload": {
     "psr-4": {
-      "TzDate\\": [
-        "src",
-        "tests"
-      ]
+      "TzDate\\": "src"
     }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "TzDate\\": "tests"
+    }
+  },
+  "config": {
+    "platform": {
+      "php": "8.4.99"
+    },
+    "sort-packages": true
   }
 }
